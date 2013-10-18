@@ -6,4 +6,30 @@ Your cards are:
     <li><%= card.to_s %></li>
   <% end %>
 </ul>
-your total is <%= calculate_total(session[:player_card]) %>
+
+Dealer cards are:
+<ul>
+   <% session[:dealer_card].each do |card| %>
+    <li><%= card.to_s %></li>
+  <% end %>
+</ul>
+<%= session[:player_name] %> total is <%= calculate_total(session[:player_card]) %>
+<br/>
+Dealer total is <%= calculate_total(session[:dealer_card]) %>
+
+<% if calculate_total(session[:player_card]) == 21 %>
+  <% @success = session[:player_name] + " wins! " + session[:player_name] + " has blackjack!" %>
+  <% @hit_or_stay = false %>
+<% elsif calculate_total(session[:dealer_card]) == 21 %>
+  <% @error = "Dealer wins! Dealer has blackjack!" %>
+  <% @hit_or_stay = false %>
+<% end %>
+
+<% if @hit_or_stay  %>
+<form action="/player/hit" method="post">
+  <input type="submit" class="btn" value="Hit">
+</form>
+<form action="/player/stay" method="post">
+  <input type="submit" class="btn" value="Stay">
+</form>
+<% end %>

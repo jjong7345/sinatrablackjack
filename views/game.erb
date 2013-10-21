@@ -1,5 +1,14 @@
 <h4>Hi, <%= session[:player_name] %> </h4>
 
+<% if @play_again %>
+  <p>
+    <strong>Play again?</strong>
+    <a href="/bet" class="btn btn-primary">Yes</a>
+    <a href="/game_over" class="btn"> No</a>
+  </p>
+<% end %>
+
+
 Your cards are:
 <ul>
   <% session[:player_card].each do |card| %>
@@ -16,14 +25,15 @@ Dealer cards are:
 <%= session[:player_name] %> total is <%= calculate_total(session[:player_card]) %>
 <br/>
 Dealer total is <%= calculate_total(session[:dealer_card]) %>
+<% if @dealer_hit %>
+    <p>
+      <h5>Dealer has <%= calculate_total(session[:dealer_card])%> and will hit.</h5>
+      <form action='/dealer/hit' method='post'>
+          <input type='submit' class='btn btn-primary' value='Click to see dealer card &rarr;'>
+        </form>
+    </p>
+  <% end %>
 
-<% if calculate_total(session[:player_card]) == 21 %>
-  <% @success = session[:player_name] + " wins! " + session[:player_name] + " has blackjack!" %>
-  <% @hit_or_stay = false %>
-<% elsif calculate_total(session[:dealer_card]) == 21 %>
-  <% @error = "Dealer wins! Dealer has blackjack!" %>
-  <% @hit_or_stay = false %>
-<% end %>
 
 <% if @hit_or_stay  %>
 <form action="/player/hit" method="post">

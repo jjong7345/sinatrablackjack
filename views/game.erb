@@ -1,3 +1,4 @@
+<div id="game">
 <h4>Hi, <%= session[:player_name] %> </h4>
 
 <% if @play_again %>
@@ -36,10 +37,11 @@ Dealer total is <%= calculate_total(session[:dealer_card]) %>
 
 
 <% if @hit_or_stay  %>
-<form action="/player/hit" method="post">
+<form id="hit_form" action="/player/hit" method="post">
   <input type="submit" class="btn" value="Hit">
 </form>
 <form action="/player/stay" method="post">
   <input type="submit" class="btn" value="Stay">
 </form>
 <% end %>
+</div>

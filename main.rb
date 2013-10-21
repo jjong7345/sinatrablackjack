@@ -112,7 +112,7 @@ post "/player/hit" do
     session[:player_money] = session[:player_money] - session[:player_bet]
   end
 
-  erb :game
+  erb :game, layout:false
 end
 
 post "/player/stay" do 
